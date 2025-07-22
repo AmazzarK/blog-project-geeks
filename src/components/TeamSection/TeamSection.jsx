@@ -41,10 +41,7 @@ export default function TeamSection() {
           Welcome our talented team
         </h2>
         
-        <p className="text-sm sm:text-base lg:text-lg text-gray-600 max-w-xs sm:max-w-md lg:max-w-2xl xl:max-w-4xl mx-auto mb-8 sm:mb-12 px-4 leading-relaxed">
-          Distinguished by a blend of diverse talents, our exceptional team thrives on unity,
-          innovation, and shared values, forging a collective journey towards unparalleled success.
-        </p>
+  
 
         <div className="flex flex-wrap justify-center items-center gap-4 sm:gap-6 lg:gap-8 xl:gap-10 px-2">
           {team.map(({ name, role, photo, bgColor }) => (
