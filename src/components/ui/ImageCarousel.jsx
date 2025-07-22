@@ -27,14 +27,12 @@ const ImageCarousel = ({ images, interval = 3000 }) => {
 
   return (
     <div className="relative w-full h-[450px] sm:h-[550px] md:h-[650px] lg:h-[750px] xl:h-[800px] overflow-hidden">
-      {/* Image */}
       <img
         src={images[currentIndex]}
         alt={`Slide ${currentIndex + 1}`}
         className="w-full h-full object-cover transition-opacity duration-700 ease-in-out opacity-100"
       />
 
-      {/* Left Arrow */}
       <button
         onClick={goToPrevious}
         className="absolute top-1/2 left-4 transform -translate-y-1/2 bg-black/60 text-white p-2 sm:p-3 rounded-full z-20 hover:bg-black/80 transition-all"
@@ -43,7 +41,6 @@ const ImageCarousel = ({ images, interval = 3000 }) => {
         &#10094;
       </button>
 
-      {/* Right Arrow */}
       <button
         onClick={goToNext}
         className="absolute top-1/2 right-4 transform -translate-y-1/2 bg-black/60 text-white p-2 sm:p-3 rounded-full z-20 hover:bg-black/80 transition-all"
@@ -52,7 +49,6 @@ const ImageCarousel = ({ images, interval = 3000 }) => {
         &#10095;
       </button>
 
-      {/* Indicators (optional) */}
       <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-2 z-20">
         {images.map((_, index) => (
           <span

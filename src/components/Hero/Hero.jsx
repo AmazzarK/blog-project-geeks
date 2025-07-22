@@ -10,13 +10,11 @@ function Hero() {
 
   return (
     <section className="relative w-full h-[450px] sm:h-[550px] md:h-[650px] lg:h-[750px] xl:h-[800px] overflow-hidden rounded-none sm:rounded-lg md:rounded-2xl shadow-none sm:shadow-lg">
-      {/* ImageCarousel */}
       <ImageCarousel images={heroImages} interval={6000} />
 
       {/* Overlay */}
       <div className="absolute inset-0 bg-black/60 sm:bg-black/70 md:bg-black/80" />
 
-      {/* Hero Content */}
       <div className="absolute inset-0 flex flex-col justify-center z-10 px-4 sm:px-6 md:px-12 lg:px-16 xl:px-24">
         <div className="max-w-full sm:max-w-3xl lg:max-w-4xl space-y-5">
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-white drop-shadow-xl leading-tight">
@@ -33,7 +31,6 @@ function Hero() {
         </div>
       </div>
 
-      {/* Swipe indicator mobile */}
       <div className="sm:hidden absolute bottom-2 left-1/2 transform -translate-x-1/2 text-white/70 text-xs flex items-center gap-1">
         <span>Glissez</span>
         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
