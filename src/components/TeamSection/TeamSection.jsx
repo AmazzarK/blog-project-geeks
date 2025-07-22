@@ -10,7 +10,7 @@ export default function TeamSection() {
     },
     {
       name: "Imane",
-      role: "Co - Founder",
+      role: "Co-Founder",
       photo: "https://randomuser.me/api/portraits/women/21.jpg",
       bgColor: "bg-blue-100",
     },
@@ -35,33 +35,31 @@ export default function TeamSection() {
   ];
 
   return (
-    <section className="min-h-screen w-full bg-white flex flex-col justify-center items-center py-8 px-4 sm:py-12 sm:px-6 lg:py-16 lg:px-8">
-      <div className="max-w-7xl mx-auto text-center">
-        <h2 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold mb-4 text-gray-900 px-4">
+    <section id="team" className="w-full bg-white py-12 px-4 sm:px-6 lg:py-16 lg:px-8">
+      <div className="max-w-7xl mx-auto">
+        <h2 className="text-3xl font-bold text-center text-gray-900 mb-8 sm:mb-10 lg:mb-12">
           Welcome our talented team
         </h2>
         
-  
-
-        <div className="flex flex-wrap justify-center items-center gap-4 sm:gap-6 lg:gap-8 xl:gap-10 px-2">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 sm:gap-6">
           {team.map(({ name, role, photo, bgColor }) => (
             <div
               key={name}
-              className="flex flex-col items-center min-w-[120px] sm:min-w-[140px] lg:min-w-[160px] max-w-[180px] mx-2 mb-4"
+              className="flex flex-col items-center"
             >
-              <div className={`w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 xl:w-28 xl:h-28 rounded-full ${bgColor} flex items-center justify-center mb-3 shadow-sm hover:shadow-md transition-shadow duration-300`}>
+              <div className={`w-20 h-20 sm:w-24 sm:h-24 rounded-full ${bgColor} flex items-center justify-center mb-3 shadow-sm hover:shadow-md transition-shadow`}>
                 <img
                   src={photo}
                   alt={name}
-                  className="w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 xl:w-20 xl:h-20 rounded-full object-cover border-2 border-white shadow-sm hover:scale-105 transition-transform duration-300"
+                  className="w-16 h-16 rounded-full object-cover border-2 border-white hover:scale-105 transition-transform"
                 />
               </div>
               
-              <h3 className="text-xs sm:text-sm lg:text-base font-semibold text-gray-800 mb-1 text-center leading-tight">
+              <h3 className="text-sm sm:text-base font-semibold text-gray-800 mb-1 text-center">
                 {name}
               </h3>
               
-              <p className="text-xs sm:text-sm lg:text-base text-gray-500 text-center">
+              <p className="text-xs sm:text-sm text-gray-500 text-center">
                 {role}
               </p>
             </div>
