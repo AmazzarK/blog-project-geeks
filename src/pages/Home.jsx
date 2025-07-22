@@ -3,8 +3,9 @@ import Navbar from '../components/Navbar/Navbar'
 import Hero from '../components/Hero/Hero'
 import Body from '../components/Body/Body'
 // import Contact from '../components/Contact/Contact'
-import Contact from '../components/TeamSection/TeamSection'
+import ContactPage from '../components/Contact/Contact.jsx'
 import Footer from '../components/Footer/Footer'
+import TeamSection from '../components/TeamSection/TeamSection.jsx'
 
 const Home = () => {
   return (
@@ -12,7 +13,8 @@ const Home = () => {
       <Navbar/>
       <Hero/>
       <Body/>
-      <Contact/>
+      <TeamSection />
+      <ContactPage/>
       <Footer/>
     </div>
   )
