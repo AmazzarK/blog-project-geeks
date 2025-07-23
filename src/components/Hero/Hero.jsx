@@ -22,7 +22,7 @@ function Hero() {
           </h1>
 
           <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-white drop-shadow-lg leading-relaxed">
-            Reprenez confiance, structurez votre avenir. Encadrement contre la démotivation, aide à la rédaction de CV et lettres de motivation, accompagnement sur mesure.
+           Transformez vos ambitions en réalité concrète et épanouissante grâce à un coaching stratégique et profondément humain.
           </p>
 
           <button className="mt-4 px-6 py-3 bg-white text-indigo-700 font-semibold rounded-full shadow-lg hover:bg-indigo-100 transition-all duration-300 ease-in-out text-base sm:text-lg md:text-xl transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-white/50 active:scale-95">
