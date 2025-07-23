@@ -1,54 +1,116 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import {
+  createBlog,
+  updateBlog,
+  uploadImage,
+} from "../utils/api";          // adjust the path if you placed utils elsewhere
 
-const AddBlog = () => {
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
-  const [image, setImage] = useState(null);
-  const [preview, setPreview] = useState(null);
+const empty = { title: "", content: "", image: "" };
 
-  const handleImageChange = (e) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      setImage(file);
-      setPreview(URL.createObjectURL(file));
+export default function AddBlog() {
+  const { state }   = useLocation();
+  const navigate    = useNavigate();
+  const editing     = Boolean(state?.blog);
+  const [form, setForm]           = useState(editing ? state.blog : empty);
+  const [file, setFile]           = useState(null);     // raw File while uploading
+  const [uploading, setUploading] = useState(false);
+  const [saving, setSaving]       = useState(false);
+  const [error, setError]         = useState("");
+
+  /* ────────── pick/change cover image ────────── */
+  const onFileChange = async (e) => {
+    const f = e.target.files?.[0];
+    if (!f) return;
+    setFile(f);
+
+    try {
+      setUploading(true);
+      const { data } = await uploadImage(f);          // POST /api/upload
+      setForm((prev) => ({ ...prev, image: data.url }));
+    } catch (err) {
+      console.error(err);
+      setError("Image upload failed.");
+    } finally {
+      setUploading(false);
     }
   };
 
-  const handleSubmit = (e) => {
+  /* ────────── handle title / content ────────── */
+  const onChange = (e) =>
+    setForm((p) => ({ ...p, [e.target.name]: e.target.value }));
+
+  /* ────────── submit ────────── */
+  const onSubmit = async (e) => {
     e.preventDefault();
-    console.log({ title, content, image });
+    setError("");
+    if (!form.title || !form.content)
+      return setError("Title & content are required.");
+
+    try {
+      setSaving(true);
+      if (editing) {
+        await updateBlog(form._id, form);   // token auto‑attached
+        alert("Blog updated!");
+      } else {
+        await createBlog(form);
+        alert("Blog created!");
+      }
+      navigate("/home");
+    } catch (err) {
+      console.error(err);
+      setError(err.response?.data?.message || "Failed to save blog.");
+    } finally {
+      setSaving(false);
+    }
   };
 
+  /* ────────── UI ────────── */
   return (
     <div className="max-w-3xl mx-auto px-6 py-10">
-      <h1 className="text-3xl font-bold text-gray-800 mb-8 text-center">Add New Blog</h1>
-      <form onSubmit={handleSubmit} className="bg-white p-6 rounded-2xl shadow-md space-y-6">
+      <h1 className="text-3xl font-bold text-gray-800 mb-8 text-center">
+        {editing ? "Edit Blog" : "Add New Blog"}
+      </h1>
+
+      {error && (
+        <div className="mb-6 p-4 bg-red-100 border-l-4 border-red-500 text-red-700">
+          {error}
+        </div>
+      )}
+
+      <form
+        onSubmit={onSubmit}
+        className="bg-white p-6 rounded-2xl shadow-md space-y-6"
+      >
         {/* Title */}
         <div>
-          <label className="block mb-2 text-sm font-medium text-gray-700">Title</label>
+          <label className="block mb-2 text-sm font-medium">Title</label>
           <input
-            type="text"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            placeholder="Enter blog title"
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            name="title"
+            value={form.title}
+            onChange={onChange}
+            placeholder="Blog title"
+            className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
             required
           />
         </div>
 
-        {/* Image Upload */}
+        {/* Cover image */}
         <div>
-          <label className="block mb-2 text-sm font-medium text-gray-700">Cover Image</label>
+          <label className="block mb-2 text-sm font-medium">Cover Image</label>
           <input
             type="file"
             accept="image/*"
-            onChange={handleImageChange}
+            onChange={onFileChange}
             className="w-full file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-blue-500 file:text-white hover:file:bg-blue-600"
           />
-          {preview && (
+          {uploading && (
+            <p className="text-sm text-gray-500 mt-2">Uploading…</p>
+          )}
+          {form.image && (
             <img
-              src={preview}
-              alt="Preview"
+              src={form.image}
+              alt="preview"
               className="mt-4 w-full h-64 object-cover rounded-lg border"
             />
           )}
@@ -56,29 +118,35 @@ const AddBlog = () => {
 
         {/* Content */}
         <div>
-          <label className="block mb-2 text-sm font-medium text-gray-700">Content</label>
+          <label className="block mb-2 text-sm font-medium">Content</label>
           <textarea
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
-            placeholder="Write your blog content here..."
+            name="content"
+            value={form.content}
+            onChange={onChange}
             rows={8}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-4 py-2 border rounded-lg resize-none focus:ring-2 focus:ring-blue-500"
             required
           />
         </div>
 
-        {/* Submit Button */}
         <div className="text-center">
           <button
             type="submit"
-            className="bg-blue-600 text-white font-semibold px-6 py-2 rounded-xl hover:bg-blue-700 transition duration-200"
+            disabled={saving || uploading}
+            className={`bg-blue-600 text-white font-semibold px-6 py-2 rounded-xl hover:bg-blue-700 transition ${
+              saving || uploading ? "opacity-50 cursor-not-allowed" : ""
+            }`}
           >
-            Publish Blog
+            {saving
+              ? editing
+                ? "Updating…"
+                : "Publishing…"
+              : editing
+              ? "Update Blog"
+              : "Publish Blog"}
           </button>
         </div>
       </form>
     </div>
   );
-};
-
-export default AddBlog;
+}

@@ -9,7 +9,7 @@ export default function TeamSection() {
       bgColor: "bg-purple-100",
     },
     {
-      name: "Imane",
+      name: "Imane Ryad",
       role: "Co-Founder",
       photo: "https://randomuser.me/api/portraits/women/21.jpg",
       bgColor: "bg-blue-100",
@@ -21,13 +21,13 @@ export default function TeamSection() {
       bgColor: "bg-green-100",
     },
     {
-      name: "Hamza",
+      name: "Hamza Basfaou",
       role: "Product Manager",
       photo: "https://randomuser.me/api/portraits/men/41.jpg",
       bgColor: "bg-yellow-100",
     },
     {
-      name: "Youssef",
+      name: "Youssef A",
       role: "Sales Manager",
       photo: "https://randomuser.me/api/portraits/men/80.jpg",
       bgColor: "bg-gray-100",
