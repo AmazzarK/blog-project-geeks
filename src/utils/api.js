@@ -4,7 +4,7 @@ import axios from "axios";
    1. Axios instance
    ───────────────────────────── */
 const baseURL =
-  "http://localhost:3000/api";
+  "https://blog-project-backend-geeks-production.up.railway.app/api";
 
 const api = axios.create({ baseURL });
 
